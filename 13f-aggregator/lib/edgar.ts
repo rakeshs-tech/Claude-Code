@@ -34,7 +34,8 @@ const HEADERS = {
 };
 
 export async function searchFilers(query: string): Promise<Filer[]> {
-  const url = `https://efts.sec.gov/LATEST/search-index?q=%22${encodeURIComponent(query)}%22&forms=13F-HR&dateRange=custom&startdt=2024-01-01&enddt=2025-12-31`;
+  const enddt = `${new Date().getFullYear()}-12-31`;
+  const url = `https://efts.sec.gov/LATEST/search-index?q=%22${encodeURIComponent(query)}%22&forms=13F-HR&dateRange=custom&startdt=2024-01-01&enddt=${enddt}`;
   const res = await fetch(url, { headers: HEADERS, next: { revalidate: 3600 } });
   if (!res.ok) return [];
   const data = await res.json();
